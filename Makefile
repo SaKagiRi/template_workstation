@@ -7,7 +7,7 @@ OBJ_DIR		= obj
 BUILD_DIR	= build
 
 # TODO: add other lib here
-# NOTE::LIBFT_DIR	= ./lib/KML
+# NOTE: LIBFT_DIR	= ./lib/KML
 
 			 #  TODO: -I (include_path) lib what you add in here
 HEADER		=#  NOTE: -I ./include -I $(LIBFT_DIR)/include
@@ -33,7 +33,7 @@ $(TARGET): $(OBJ) | $(BUILD_DIR)
 
 $(LIBS):
 @#  TODO: add libdir here
-@#  NOTE:	@make -C $(LIBFT_DIR)
+@#  NOTE: @make -C $(LIBFT_DIR)
 
 $(OBJ): $(SRC) | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@ $(HEADER)
