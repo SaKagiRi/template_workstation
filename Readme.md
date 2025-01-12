@@ -18,6 +18,6 @@
 
     * __`library/`__
 
-Makefile
+* Makefile
 
-Readmr.md
+* Readmr.md
