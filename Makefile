@@ -1,4 +1,5 @@
-TARGET		= $(BUILD_DIR)/NAME # TODO: creat your name target
+NAME		= NAME # TODO: creat your name target
+TARGET		= $(BUILD_DIR)/$(NAME)
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -g3
 
@@ -23,7 +24,9 @@ SRC			=#  NOTE: src/main.c
 # delete pathfile(notdie) and delete.c(basname) and add.o(addsuffix) and add obj/(addprefix)
 OBJ			= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(basename $(notdir $(SRC)))))
 
-all: $(LIBS) $(TARGET)
+all: $(NAME)
+
+$(NAME): $(LIBS) $(TARGET)
 
 $(TARGET): $(OBJ) | $(BUILD_DIR)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBS) $(HEADER) -o $@ && printf "\033[38;5;46m\033[1m⟪ Complete ⟫\033[0m\n" 
