@@ -3,7 +3,7 @@ TARGET		= $(BUILD_DIR)/$(NAME)
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -g3
 
-OBJ_DIR		= obj
+OBJ_DIR		= $(BUILD_DIR)obj
 BUILD_DIR	= build
 
 # TODO: add other lib here
@@ -26,12 +26,11 @@ OBJ			= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(basename $(notdir $(SRC)))))
 
 all: $(NAME)
 
-$(NAME): $(LIBS) $(TARGET)
+$(NAME): lib $(TARGET)
 
 $(TARGET): $(OBJ) | $(BUILD_DIR)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBS) $(HEADER) -o $@ && printf "\033[38;5;46m\033[1m⟪ Complete ⟫\033[0m\n" 
-
-$(LIBS):
+lib:
 @#  TODO: add libdir here
 @#  NOTE: @make -C $(LIBFT_DIR)
 
@@ -61,4 +60,4 @@ fclean: clean fclean_lib
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re lib
