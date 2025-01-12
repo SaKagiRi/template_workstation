@@ -1,28 +1,22 @@
 ### this repo structure file
 
-* __[include]__
+* __`include/`__
 
     * all .h file
 
-* __[src]__
+* **`src/`**
 
-    * __[app]__
+    * __`app`__
 
         * file main for program
 
-    * __[component]__
+    * __`utils`__
 
-        * [function utils]
+        * function file
 
-           * function file
+* __`lib/`__
 
-        * [function utils]
-
-            * function file
-
-* __[lib]__
-
-    * __[library]__
+    * __`library/`__
 
 Makefile
 
