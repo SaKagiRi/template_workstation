@@ -28,7 +28,7 @@ all: $(NAME)
 
 $(NAME): lib $(TARGET)
 
-$(TARGET): $(OBJ) | $(BUILD_DIR)
+$(TARGET): $(OBJ) Makefile | $(BUILD_DIR)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBS) $(HEADER) -o $@ && printf "\033[38;5;46m\033[1m⟪ Complete ⟫\033[0m\n" 
 lib:
 @#  TODO: add libdir here
