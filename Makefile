@@ -1,42 +1,38 @@
-NAME		= NAME # TODO: creat your name target
+NAME		= #NAME
 TARGET		= $(BUILD_DIR)/$(NAME)
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -g3
 
-OBJ_DIR		= $(BUILD_DIR)obj
+OBJ_DIR		= $(BUILD_DIR)/obj
 BUILD_DIR	= build
+#LIBFT_DIR	= ./lib/KML
+#MLX_DIR		= ./lib/MLX42
 
-# TODO: add other lib here
-# NOTE: LIBFT_DIR	= ./lib/KML
+HEADER		= -I ./include #-I $(LIBFT_DIR)/include -I $(MLX_DIR)/include
+LIBS		= #$(LIBFT_DIR)/build/kml.a $(MLX_DIR)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
-			 #  TODO: -I (include_path) lib what you add in here
-HEADER		=#  NOTE: -I ./include -I $(LIBFT_DIR)/include
-
-			 #  TODO: file target lib here
-LIBS		=#  NOTE: $(LIBFT_DIR)/build/libft.a 
-
-#(dir) for get path form filename and sort to mkdir
-#PATH_OBJ	= $(sort $(dir $(SRC)))
-
-			 #  TODO: add srcfile
-SRC			=#  NOTE: src/main.c
-
-# delete pathfile(notdie) and delete.c(basname) and add.o(addsuffix) and add obj/(addprefix)
-OBJ			= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(basename $(notdir $(SRC)))))
+SRC			= #src/main.c
+OBJ			= $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): lib $(TARGET)
 
-$(TARGET): $(OBJ) Makefile | $(BUILD_DIR)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBS) $(HEADER) -o $@ && printf "\033[38;5;46m\033[1m⟪ Complete ⟫\033[0m\n" 
+$(TARGET): $(OBJ) | $(BUILD_DIR)
+	@if [ -f $@ ] && [ "$(OBJ_DIR)/$(notdir $(word 1, $(OBJ)))" -nt "$(word 1, $(SRC))" ] && [ "$(OBJ_DIR)/$(notdir $(word 1, $(OBJ)))" -ot "$@" ]; then \
+		echo "$(NAME) is up to date"; \
+		rm -rf $(OBJ); \
+	else \
+		$(CC) $(CFLAGS) $(OBJ) $(LIBS) $(HEADER) -o $@ && mv $(OBJ) $(OBJ_DIR); \
+		printf "\033[38;5;46m\033[1m⟪ Complete ⟫\033[0m\n"; \
+	fi
+
 lib:
-@#  TODO: add libdir here
-@#  NOTE: @make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
+	@cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4
 
-$(OBJ): $(SRC) | $(OBJ_DIR)
+%.o: %.c | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@ $(HEADER)
-
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
@@ -44,20 +40,19 @@ $(OBJ_DIR):
 $(BUILD_DIR):
 	@mkdir -p $(BUILD_DIR)
 
-clean_lib:
-@#  TODO: add clean obj lib here
-@#  NOTE: @rm -rf $(LIBFT_DIR)/obj
+#clean_lib:
+#	@rm -rf $(LIBFT_DIR)/obj
+#	@rm -rf $(MLX_DIR)/build
 
-fclean_lib:
-@#  TODO: add clean target lib here
-@#  NOTE: @rm -rf $(LIBFT_DIR)/build
+#fclean_lib:
+#	@rm -rf $(LIBFT_DIR)/build
 
-clean: clean_lib
+clean: #clean_lib
 	@rm -rf $(OBJ_DIR)
 
-fclean: clean fclean_lib
+fclean: #clean fclean_lib
 	@rm -rf $(BUILD_DIR)
 
-re: fclean all
+re: fclean $(NAME)
 
-.PHONY: all clean fclean re lib
+.PHONY: all clean fclean re lib #clean_lib fclean_lib 
